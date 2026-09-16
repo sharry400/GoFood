@@ -36,12 +36,12 @@ const Card = ({ foodItem }) => {
                 <h5 className="card-title">{foodItem.name}</h5>
                 <p className="card-text">{foodItem.description}</p>
                 <div className="container w-100">
-                    <select className='m-2 h-100 bg-success rounded' value={quantity} onChange={(event) => setQuantity(event.target.value)}>
+                    <select className='m-1 h-100 bg-success rounded' value={quantity} onChange={(event) => setQuantity(event.target.value)}>
                         {Array.from(Array(6), (e, i) => {
                             return <option key={i + 1} value={i + 1}>{i + 1}</option>
                         })}
                     </select>
-                    <select className='m-2 h-100 bg-success rounded' value={size} onChange={(event) => setSize(event.target.value)}>
+                    <select className='m-2 h-100  bg-success rounded' value={size} onChange={(event) => setSize(event.target.value)}>
                         {sizes.map((option) => <option key={option} value={option}>{option}</option>)}
                     </select>
                     <div className="d-inline h-100 fs-5">

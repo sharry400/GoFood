@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
-    const [credentials, setCredentials] = useState({ name: "", email: "", password: "", location: "" })
+    const nav = useNavigate()
+    const [credentials, setCredentials] = useState({ name: "", email: "", password: "", location: "", confirmPassword: "" })
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if(credentials.password !== credentials.confirmPassword) {
+            alert("Passwords do not match")
+            return
+        }
         try {
             const response = await fetch("http://localhost:5000/api/auth/createuser", {
                 method: 'POST',
@@ -23,7 +29,11 @@ const Signup = () => {
                 alert("Enter Valid Credentials")
                 return
             }
-            alert("Signup successful")
+            else{
+                localStorage.setItem('token', json.authToken)
+                nav('/login')
+                alert("Signup successful")
+            }
         } catch (error) {
             console.error(error)
             alert("Something went wrong")
@@ -34,30 +44,111 @@ const Signup = () => {
     }
     return (
         <>
-            <div className='container'>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="name" className="form-label">Name</label>
-                        <input type="text" className="form-control" id='name' name='name' value={credentials.name} onChange={onChange} />
+            <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "80vh", margin: "40px auto" }}>
+                <div
+                    className="card text-white shadow-lg"
+                    style={{
+                        maxWidth: "500px", // Signup form mein fields zyada hain toh thoda choda (wide) rakha hai
+                        width: "100%",
+                        backgroundColor: "#212529",
+                        border: "1px solid #198754",
+                        borderRadius: "10px"
+                    }}
+                >
+                    <div className="card-header text-center" style={{ borderBottom: "1px solid #198754" }}>
+                        <h3 className="m-0 py-2" style={{ color: "#198754", fontWeight: "bold" }}>Sign Up</h3>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" name='email' value={credentials.email} onChange={onChange} />
+
+                    <div className="card-body p-4">
+                        <form onSubmit={handleSubmit}>
+
+                            <div className="mb-3">
+                                <label htmlFor="name" className="form-label" style={{ fontWeight: "500" }}>Name</label>
+                                <input
+                                    type="text"
+                                    className="form-control text-white shadow-none"
+                                    id="name"
+                                    name="name"
+                                    value={credentials.name}
+                                    onChange={onChange}
+                                    placeholder="Enter your name"
+                                    style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label" style={{ fontWeight: "500" }}>Email address</label>
+                                <input
+                                    type="email"
+                                    className="form-control text-white shadow-none"
+                                    id="email"
+                                    name="email"
+                                    value={credentials.email}
+                                    onChange={onChange}
+                                    placeholder="Enter your email"
+                                    style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label" style={{ fontWeight: "500" }}>Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control text-white shadow-none"
+                                    id="password"
+                                    name="password"
+                                    value={credentials.password}
+                                    onChange={onChange}
+                                    placeholder="Enter your password"
+                                    style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="confirmPassword" className="form-label" style={{ fontWeight: "500" }}>Confirm Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control text-white shadow-none"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    value={credentials.confirmPassword}
+                                    onChange={onChange}
+                                    placeholder="Confirm your password"
+                                    style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label htmlFor="location" className="form-label" style={{ fontWeight: "500" }}>Address</label>
+                                {/* Note: type="location" invalid hota hai isliye type="text" kar diya hai */}
+                                <input
+                                    type="text"
+                                    className="form-control text-white shadow-none"
+                                    id="location"
+                                    name="location"
+                                    value={credentials.location}
+                                    onChange={onChange}
+                                    placeholder="Enter your full address"
+                                    style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="btn w-100 mt-2 py-2"
+                                style={{
+                                    backgroundColor: "#198754",
+                                    color: "white",
+                                    fontWeight: "bold",
+                                    borderRadius: "6px"
+                                }}
+                            >
+                                Submit
+                            </button>
+
+                        </form>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" name='password' value={credentials.password} onChange={onChange} />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                        <input type="password" className="form-control" id="confirmPassword" name='confirmPassword' value={credentials.confirmPassword} onChange={onChange} />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="location" className="form-label">Address</label>
-                        <input type="location" className="form-control" id="location" name='location' value={credentials.location} onChange={onChange} />
-                    </div>
-                    <button type="submit" className=" m-3 btn btn-success">Submit</button>
-                </form>
+                </div>
             </div>
         </>
     )

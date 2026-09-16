@@ -46,9 +46,9 @@ const Navbar = () => {
                                 </div>
                                 :
                                 <div>
-                                    <Link to="/cart" className="btn bg-white text-success mx-1">
+                                    <div className="btn bg-white text-success mx-1">
                                         MyCart ({totalItems})
-                                    </Link>
+                                    </div>
                                     <div className="btn bg-danger text-white mx-1" onClick={handleLogout}>
                                         Logout
                                     </div>
