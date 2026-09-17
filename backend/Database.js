@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
-const URL = 'mongodb://127.0.0.1:27017/gofood';
+const URL = process.env.MongoURI;
 
 const mongoDB = async () => {
     try {
-        await mongoose.connect(URL);
+        await mongoose.connect(URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
         console.log('MongoDB Connected Successfully');
     } catch (error) {
         console.error('MongoDB Connection Failed:', error.message);
