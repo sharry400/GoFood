@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Signup = () => {
     const nav = useNavigate()
@@ -48,7 +49,7 @@ const Signup = () => {
                 <div
                     className="card text-white shadow-lg"
                     style={{
-                        maxWidth: "500px", // Signup form mein fields zyada hain toh thoda choda (wide) rakha hai
+                        maxWidth: "500px", 
                         width: "100%",
                         backgroundColor: "#212529",
                         border: "1px solid #198754",
@@ -73,6 +74,8 @@ const Signup = () => {
                                     onChange={onChange}
                                     placeholder="Enter your name"
                                     style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                    required
+                                    autoComplete="off"
                                 />
                             </div>
 
@@ -86,7 +89,9 @@ const Signup = () => {
                                     value={credentials.email}
                                     onChange={onChange}
                                     placeholder="Enter your email"
+                                    autoComplete="off"
                                     style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                    required
                                 />
                             </div>
 
@@ -101,6 +106,8 @@ const Signup = () => {
                                     onChange={onChange}
                                     placeholder="Enter your password"
                                     style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                    required
+                                    autoComplete="new-password"
                                 />
                             </div>
 
@@ -115,12 +122,13 @@ const Signup = () => {
                                     onChange={onChange}
                                     placeholder="Confirm your password"
                                     style={{ backgroundColor: "#2d333b", borderColor: "#495057" }}
+                                    required
+                                    autoComplete="new-password"
                                 />
                             </div>
 
                             <div className="mb-4">
                                 <label htmlFor="location" className="form-label" style={{ fontWeight: "500" }}>Address</label>
-                                {/* Note: type="location" invalid hota hai isliye type="text" kar diya hai */}
                                 <input
                                     type="text"
                                     className="form-control text-white shadow-none"
@@ -145,7 +153,7 @@ const Signup = () => {
                             >
                                 Submit
                             </button>
-
+                            <p className='mt-2 text-center'>Already Have an Account<Link to='/login' class="btn btn-link p-0 ms-1 align-baseline">Login</Link></p>
                         </form>
                     </div>
                 </div>
