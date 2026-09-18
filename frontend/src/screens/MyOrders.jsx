@@ -13,7 +13,7 @@ const MyOrders = () => {
                     return
                 }
 
-                const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
                 const response = await fetch(`${apiUrl}/api/myOrderData?email=${encodeURIComponent(email)}`)
                 const json = await response.json()
 
